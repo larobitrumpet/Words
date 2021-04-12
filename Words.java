@@ -16,10 +16,7 @@ public class Words
                 {
                     String out = getWord(word, api_key);
                     String[] def = parseJSON(out);
-                    for (int j = 0; j < def.length; j++)
-                    {
-                        System.out.println(def[j]);
-                    }
+                    printDefinition(word, def);
                 }
                 catch(IOException e)
                 {
@@ -59,5 +56,14 @@ public class Words
         JsonArray array = parser.parse(json).getAsJsonArray();
         String[] def = gson.fromJson(array.get(0).getAsJsonObject().get("shortdef"), String[].class);
         return def;
+    }
+
+    public static void printDefinition(String word, String[] def)
+    {
+        System.out.printf("Definitions for %s:%n", word);
+        for (int i = 0; i < def.length; i++)
+        {
+            System.out.printf("\t%d. %s%n", i + 1, def[i]);
+        }
     }
 }
