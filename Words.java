@@ -5,20 +5,31 @@ public class Words
 {
     public static void main(String args[])
     {
-        String word = "test";
+        String word;
         String api_key = "2a3de104-6904-436b-8a5e-93227974a936";
-        try
+        if (args.length > 0)
         {
-            String out = getWord(word, api_key);
-            String[] def = parseJSON(out);
-            for (int i = 0; i < def.length; i++)
+            for (int i = 0; i < args.length; i++)
             {
-                System.out.println(def[i]);
+                word = args[i];
+                try
+                {
+                    String out = getWord(word, api_key);
+                    String[] def = parseJSON(out);
+                    for (int j = 0; j < def.length; j++)
+                    {
+                        System.out.println(def[j]);
+                    }
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
-        catch(IOException e)
+        else
         {
-            e.printStackTrace();
+            System.out.println("No words were given");
         }
     }
 
