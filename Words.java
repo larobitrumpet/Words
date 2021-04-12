@@ -1,4 +1,5 @@
 import java.io.*;
+import com.google.gson.*;
 
 public class Words
 {
@@ -9,7 +10,11 @@ public class Words
         try
         {
             String out = getWord(word, api_key);
-            System.out.println(out);
+            String[] def = parseJSON(out);
+            for (int i = 0; i < def.length; i++)
+            {
+                System.out.println(def[i]);
+            }
         }
         catch(IOException e)
         {
@@ -34,5 +39,14 @@ public class Words
             output = output + line + "\n";
         }
         return output;
+    }
+
+    public static String[] parseJSON(String json)
+    {
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
+        JsonArray array = parser.parse(json).getAsJsonArray();
+        String[] def = gson.fromJson(array.get(0).getAsJsonObject().get("shortdef"), String[].class);
+        return def;
     }
 }
