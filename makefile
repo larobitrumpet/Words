@@ -5,7 +5,7 @@ JCP = -cp .:gson-2.2.4.jar
 
 default: Words.class
 
-WxStation.class: Words.java
+Words.class: Words.java
 	$(JCC) $(JFLAGS) $(JCP) Words.java
 
 clean:
