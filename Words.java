@@ -66,7 +66,7 @@ public class Words
         {
             def = gson.fromJson(array.get(0).getAsJsonObject().get("shortdef"), String[].class);
         }
-        catch(IndexOutOfBoundsException e)
+        catch(Exception e)
         {
             def = null;
         }
