@@ -16,7 +16,14 @@ public class Words
                 {
                     String out = getWord(word, api_key);
                     String[] def = parseJSON(out);
-                    printDefinition(word, def);
+                    if (def == null)
+                    {
+                        System.out.printf("No definitions for %s.%n", word);
+                    }
+                    else
+                    {
+                        printDefinition(word, def);
+                    }
                 }
                 catch(IOException e)
                 {
@@ -51,10 +58,18 @@ public class Words
 
     public static String[] parseJSON(String json)
     {
+        String[] def;
         Gson gson = new Gson();
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(json).getAsJsonArray();
-        String[] def = gson.fromJson(array.get(0).getAsJsonObject().get("shortdef"), String[].class);
+        try
+        {
+            def = gson.fromJson(array.get(0).getAsJsonObject().get("shortdef"), String[].class);
+        }
+        catch(IndexOutOfBoundsException e)
+        {
+            def = null;
+        }
         return def;
     }
 
